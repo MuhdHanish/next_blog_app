@@ -1,48 +1,39 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { TPost } from "@/types/TPost";
 import DeleteButton from "./DeleteButton";
+import Category from "./Category";
 
 type TPostProps = {
-  id: string;
-  author: string;
-  authorEmail?: string;
-  title: string;
-  content: string;
-  category?: string;
-  datePublished: string;
-  links?: string[];
-  thumbnail?: string;
-};
+  post: TPost
+}
 
-export default function Post({ postData }: { postData: TPostProps }) {
+export default function Post({ post }: TPostProps) {
   const isEditable = true;
   return (
     <div className="my-4 border-b border-b-300 py-8">
       <div className="mb-4">
-        Posted by: <span className="font-bold">{postData?.author}</span> on{" "}
-        {postData?.datePublished}
+        Posted by: <span className="font-bold">{post?.author}</span> on
+        {post?.datePublished}
       </div>
       <div className="w-full h-72 relative">
         <Image
           className="object-cover rounded-md object-center"
-          src={postData?.thumbnail || "/thumbnail-placeholder.png"}
-          alt={postData?.title}
+          src={post?.thumbnail || "/thumbnail-placeholder.png"}
+          alt={post?.title}
           fill
         />
       </div>
-      {postData?.category && (
-        <Link
-          className="px-4 py-0.5 w-fit rounded-md bg-slate-800 text-white font-bold cursor-pointer text-sm mt-4 block"
-          href={`/categories/${postData?.category}`}
-        >
-          {postData?.category}
-        </Link>
+      {post?.category && (
+        <div className="mt-4 flex">
+          <Category category={post?.category} />
+        </div>
       )}
-      <h2>{postData?.title}</h2>
-      <p className="content">{postData?.content}</p>
-      {postData?.links && (
+      <h2>{post?.title}</h2>
+      <p className="content">{post?.content}</p>
+      {post?.links && (
         <div className="my-4 flex flex-col gap-3">
-          {postData?.links?.map((link, index) => (
+          {post?.links?.map((link, index) => (
             <div key={index} className="flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +57,7 @@ export default function Post({ postData }: { postData: TPostProps }) {
           {isEditable && (
             <div className="flex gap-3 w-fit py-2 px-4 ">
               <Link
-                href={`/edit-post/${postData?.id}`}
+                href={`/edit-post/${post?.id}`}
                 className="text-emerald-500 editable-btns"
               >
                 Edit

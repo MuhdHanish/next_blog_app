@@ -1,16 +1,12 @@
-import Post from "@/components/Post";
+import { posts } from "@/data"; 
+import PostsList from "@/components/PostsList";
 import CategoriesList from "@/components/CategoriesList";
-import { posts } from "@/data";
 
 export default function Home() {
   return (
     <>
       <CategoriesList />
-      {posts && posts?.length > 0 ? (
-        posts?.map((post) => (<Post key={post?.id} postData={post}/>))
-      ) : (
-        <div>No posts to display!</div>
-      )}
+      <PostsList posts={posts}/>
     </>
   );
 }

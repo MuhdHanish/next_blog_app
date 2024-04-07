@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { TPost } from "@/types/TPost";
-import DeleteButton from "./DeleteButton";
+import { TPost } from "@/types";
 import Category from "./Category";
+import DeleteButton from "./DeleteButton";
 
 type TPostProps = {
   post: TPost

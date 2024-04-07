@@ -6,7 +6,11 @@ export default function Home() {
   return (
     <>
       <CategoriesList />
-      <PostsList posts={posts}/>
+      {posts && posts?.length > 0 ? (
+        <PostsList posts={posts} />
+      ) : (
+        <div className="py-6">No posts to display!</div>
+      )}
     </>
   );
 }

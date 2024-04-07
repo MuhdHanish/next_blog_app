@@ -3,25 +3,41 @@
 @tailwind utilities;
 
 .btn {
-  @apply bg-slate-200 px-4 py-2 rounded-md font-semibold hover:scale-105 transition
+  @apply bg-slate-200 px-4 py-2 rounded-md font-semibold hover:scale-105 transition outline-none;
 }
 
 .editable-btns {
-  @apply px-2 py-1 text-sm font-bold  rounded-md bg-slate-200 hover:bg-slate-300 transition
+  @apply px-2 py-1 text-sm font-bold outline-none rounded-md bg-slate-200 hover:bg-slate-300 transition;
+}
+
+.primary-btn {
+  @apply px-4 py-2 bg-slate-800 text-white rounded-md outline-none;
+}
+
+.singup-btns {
+  @apply flex items-center border p-4 rounded-md gap-4 hover:bg-slate-100/25 transition outline-none;
 }
 
 h1 {
-  @apply text-2xl font-bold
+  @apply text-2xl font-bold;
 }
 
 h2 {
-  @apply text-2xl font-bold my-4
+  @apply text-2xl font-bold my-4;
 }
 
 p.content {
-  @apply leading-loose
+  @apply leading-loose;
 }
 
 .link {
-  @apply text-[#7563DF] font-bold max-w-full overflow-hidden text-ellipsis
+  @apply text-[#7563DF] font-bold max-w-full overflow-hidden text-ellipsis;
+}
+
+input, textarea, select {
+  @apply px-4 py-2 border border-slate-300 rounded-md outline-none;
+}
+
+textarea {
+  @apply h-36;
 }

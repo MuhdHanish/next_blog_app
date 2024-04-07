@@ -1,5 +1,3 @@
 export default function Footer() {
-  return (
-    <div>Footer</div>
-  )
+  return <footer className="py-3 text-sm">This website is designed by MuhHanish © 2024</footer>;
 }

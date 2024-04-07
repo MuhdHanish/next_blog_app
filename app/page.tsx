@@ -1,5 +1,12 @@
+import CategoriesList from "@/components/CategoriesList"
+
 export default function Home() {
   return (
-    <h1>Home</h1>
+    <>
+      <CategoriesList/>
+      <div>
+        Post
+      </div>
+    </>
   );
 }

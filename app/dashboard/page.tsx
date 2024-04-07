@@ -10,8 +10,8 @@ export default function Dashboard() {
         <PostsList posts={posts} />
       ) : (
           <div className="py-6">
-            No posts created yet!
-            <Link href={`/create-post`}>Create Post</Link>
+            No posts created yet! {" "}
+            <Link className="underline" href={`/create-post`}>Create Post</Link>
           </div>
       )}
     </div>

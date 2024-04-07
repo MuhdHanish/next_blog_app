@@ -2,16 +2,20 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <div>
+    <nav className="flex justify-between pb-4  mb-4 border-b">
       <div>
         <Link href={`/`}>
-          <h1>Tech News</h1>
+          <h1 className="text-4xl font-bold tracking-tighter text-dark">Tech News</h1>
         </Link>
-        <p>Exploring Tomorrow&apos;s Innovations, <br /> One Byte at a Time</p>
+        <p className="text-sm">
+          Exploring Tomorrow&apos;s Innovations, <br /> One Byte at a Time
+        </p>
       </div>
-      <div>
-        <Link className="btn" href={`/sign-in`}>Sign In</Link>
+      <div className="flex items-center">
+        <Link className="btn" href={`/sign-in`}>
+          Sign In
+        </Link>
       </div>
-    </div>
+    </nav>
   );
 }

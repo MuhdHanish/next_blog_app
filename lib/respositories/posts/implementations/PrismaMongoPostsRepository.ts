@@ -16,6 +16,19 @@ export class PrismaMongoPostsRepository implements IPostsRepository {
       throw new Error(error instanceof Error ? error.message : `Error finding posts`);
     }
   }
+
+  async findPostById(id: string) {
+    try {
+      const post = await this.postModel.findUniqueOrThrow({
+        where: {
+          id, 
+        },
+      });
+      return post;
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : `Error finding post using id`);
+    }
+  }
   
   async createPost(postData: any) {
     try {

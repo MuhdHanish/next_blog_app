@@ -1,12 +1,21 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
+import { TPopupLink } from "@/types";
+import ProfilePopup from "./ProfilePopup";
+import { useSession } from "next-auth/react";
+
+const popupLinks: TPopupLink[] = [
+  { link: `/dashboard`, destination: `Dashboard` },
+  { link: `/create-post`, destination: `Create Post` },
+];
 
 export default function NavBar() {
   const { status, data: session } = useSession();
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
   return (
-    <nav className="flex justify-between pb-4  mb-4 border-b">
+    <nav className="flex justify-between pb-4  mb-4 border-b relative">
       <div>
         <Link href={`/`}>
           <h1 className="text-4xl font-bold tracking-tighter text-dark">
@@ -19,23 +28,26 @@ export default function NavBar() {
       </div>
       <div className="flex items-center">
         {status === "authenticated" ? (
-          // <button onClick={() => signOut()} className="btn">
-          //   Sign Out
-          // </button>
           <>
+            <ProfilePopup session={session} isPopupVisible={isPopupVisible} setIsPopupVisible={setIsPopupVisible} popupLinks={popupLinks}/>
             <div className="flex gap-2 items-center">
-              <Link className="flex gap-1.5 items-center mr-6" href={`/create-post`}>
+              <Link
+                className="hidden md:flex gap-1.5 items-center mr-5"
+                href={`/create-post`}
+              >
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.7}
+                    stroke="currentColor"
+                    className="w-[18px] h-[18px]"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z"
-                      clipRule="evenodd"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                     />
                   </svg>
                 </span>
@@ -46,8 +58,9 @@ export default function NavBar() {
                   session?.user?.image ||
                   "https://cdn.create.vista.com/api/media/small/356209164/stock-vector-user-avatar-illustration-anonymous-sign"
                 }
+                onClick={() => setIsPopupVisible((prev) => !prev)}
                 alt="Profile Image"
-                className="rounded-sm"
+                className="rounded-sm cursor-pointer"
                 width={36}
                 height={36}
               />

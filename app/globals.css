@@ -14,7 +14,7 @@
   @apply px-4 py-2 bg-slate-800 text-white rounded-md outline-none;
 }
 
-.singup-btns {
+.signup-btns {
   @apply flex items-center border p-4 rounded-md gap-4 hover:bg-slate-100/25 transition outline-none;
 }
 

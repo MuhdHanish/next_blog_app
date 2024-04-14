@@ -21,7 +21,7 @@ export type TPost = {
   authorEmail?: string;
   title: string;
   content: string;
-  category?: string;
+  categoryTitle?: string;
   datePublished: string;
   links?: string[];
   thumbnail?: string;

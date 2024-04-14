@@ -19,10 +19,11 @@ export class PrismaMongoPostsRepository implements IPostsRepository {
 
   async findPostById(id: string) {
     try {
-      const post = await this.postModel.findUniqueOrThrow({
+      const post = await this.postModel.findUnique({
         where: {
-          id, 
+          id,
         },
+        include: { author: { select: { name: true } } }
       });
       return post;
     } catch (error) {

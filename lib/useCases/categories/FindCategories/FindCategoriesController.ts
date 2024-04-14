@@ -3,12 +3,12 @@ import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandl
 
 export class FindCategoriesController {
   constructor(
-    private readonly findCategoriesUseCase: FindCategoriesUseCase,
+    private readonly useCase: FindCategoriesUseCase,
     private readonly responseHandler: IResponseHandler
   ) {}
   async handle(req: Request, res: Response) {
     try {
-      const categories = await this.findCategoriesUseCase.execute();
+      const categories = await this.useCase.execute();
       return this.responseHandler.successHandler(categories);
     } catch (error) {
       return this.responseHandler.serverErrorHandler(error);

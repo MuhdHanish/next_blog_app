@@ -4,7 +4,7 @@ import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandl
 
 export class CreatePostController {
   constructor(
-    private readonly createPostUseCase: CreatePostUseCase,
+    private readonly useCase: CreatePostUseCase,
     private readonly responseHandler: IResponseHandler
   ) { }
   async handle(req: Request, res: Response) {
@@ -32,7 +32,7 @@ export class CreatePostController {
         );
       }
       const authorEmail = `muhammedhanish11@gmail.com`;
-      const post = await this.createPostUseCase.execute({
+      const post = await this.useCase.execute({
         title,
         content,
         thumbnail,

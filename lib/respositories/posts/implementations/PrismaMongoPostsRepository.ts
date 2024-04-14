@@ -8,7 +8,8 @@ export class PrismaMongoPostsRepository implements IPostsRepository {
   async findPosts() {
     try {
       const posts = await this.postModel.findMany({
-        include: { author: { select: { name: true } } }
+        include: { author: { select: { name: true } } },
+        orderBy: { createdAt: "desc" }
       });
       return posts;
     } catch (error) {

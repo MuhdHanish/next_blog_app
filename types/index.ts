@@ -10,6 +10,11 @@ export type TSingInButton = {
   altText: string;
 };
 
+export type TPopupLink = {
+  link: string;
+  destination: string;
+};
+
 export type TPost = {
   id: string;
   author: string;

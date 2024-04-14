@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Session } from "next-auth";
 import { TPopupLink } from "@/types";
 import { signOut } from "next-auth/react";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 type TProfilePopupProps = {
   isPopupVisible: boolean;
@@ -14,8 +14,23 @@ type TProfilePopupProps = {
 
 export default function ProfilePopup({ isPopupVisible, setIsPopupVisible, session, popupLinks }: TProfilePopupProps) {
   const popupRef = useRef<HTMLDivElement | null>(null);
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      setIsPopupVisible(false);
+    }
+  },[setIsPopupVisible]);
+  useEffect(() => { 
+    document.addEventListener("click", handleClickOutside);
+    if (!isPopupVisible) {
+      document.removeEventListener("click",  handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("click",  handleClickOutside);
+    }
+  }, [handleClickOutside, isPopupVisible]);
   return (
     <div
+      ref={popupRef}
       className={`absolute z-30 right-0 top-20 bg-white p-3 shadow-md rounded-md text-right flex flex-col gap-3 min-w-[200px] ${
         isPopupVisible ? `flex` : `hidden`
       }`}

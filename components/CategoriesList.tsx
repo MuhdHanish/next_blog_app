@@ -6,7 +6,7 @@ export default function CategoriesList() {
     <div className="flex gap-2 flex-wrap">
       {categoriesList &&
         categoriesList?.map((category) => (
-          <Category key={category?.id} category={category?.name} />
+          <Category key={category?.id} title={category?.title} />
         ))}
     </div>
   );

@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { posts } from "@/data";
+import { redirect } from "next/navigation";
 import PostsList from "@/components/PostsList";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions);
+  if (!session) return redirect(`/sign-in`);
+
   return (
     <div>
       <h1>My Posts</h1>

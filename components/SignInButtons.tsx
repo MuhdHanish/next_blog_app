@@ -22,7 +22,7 @@ export default function SignInButtons() {
       <h1 className="text-center mt-8">Sign In</h1>
       <div className="mt-4 p-4 flex flex-col items-center justify-center gap-4">
         {singInButtons && singInButtons?.length > 0 ? (
-          singInButtons.map((item, index) => (
+          singInButtons?.map((item, index) => (
             <SignInButton
               key={index}
               provider={item.provider}

@@ -1,22 +1,36 @@
-import Image from "next/image";
+import { TSingInButton } from "@/types";
+import SignInButton from "./SignInButton";
+
+const singInButtons: TSingInButton[] = [
+  {
+    provider: "github",
+    text: "Sign In with GitHub",
+    imageSrc: "/github-logo.svg",
+    altText: "Github Logo",
+  },
+  {
+    provider: "google",
+    text: "Sign In with Google",
+    imageSrc: "/google-logo.svg",
+    altText: "Google Logo",
+  },
+];
 
 export default function SignInButtons() {
   return (
     <>
       <h1 className="text-center mt-8">Sign In</h1>
       <div className="mt-4 p-4 flex flex-col items-center justify-center gap-4">
-        <button className="singup-btns">
-          <span>
-            <Image src={'/github-logo.svg'} width={30} height={30} alt={'Github Logo'}/>
-          </span>
-          Sign In with GitHub
-        </button>
-        <button className="singup-btns">
-          <span>
-            <Image src={'/google-logo.svg'} width={30} height={30} alt={'Google Logo'}/>
-          </span>
-          Sign In with Google
-        </button>
+        {singInButtons &&
+          singInButtons.map((item, index) => (
+            <SignInButton
+              key={index}
+              provider={item.provider}
+              text={item.text}
+              imageSrc={item.imageSrc}
+              altText={item.altText}
+            />
+          ))}
       </div>
     </>
   );

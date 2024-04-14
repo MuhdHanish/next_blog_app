@@ -2,11 +2,10 @@ import { ICategoriesRepository } from "@/lib/respositories/categories/ICategorie
 
 
 export class FindCategoriesUseCase {
-
-  constructor(private readonly categoriesRepository: ICategoriesRepository) { };
+  constructor(private readonly repository: ICategoriesRepository) { };
   
   async execute() {
-    const categories = await this.categoriesRepository.findCategories();
+    const categories = await this.repository.findCategories();
     return categories;
   }
 

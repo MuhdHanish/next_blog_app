@@ -24,9 +24,9 @@ export default function Post({ post }: TPostProps) {
           fill
         />
       </div>
-      {post?.category && (
+      {post?.categoryTitle && (
         <div className="mt-4 flex">
-          <Category category={post?.category} />
+          <Category title={post?.categoryTitle} />
         </div>
       )}
       <h2>{post?.title}</h2>

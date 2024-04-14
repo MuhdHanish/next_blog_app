@@ -32,9 +32,9 @@ export default function Post({ post }: TPostProps) {
       <h2>{post?.title}</h2>
       <p className="content">{post?.content}</p>
       {post?.links && (
-        <div className="my-4 flex flex-col gap-3">
+        <div className="my-4 flex flex-col gap-1.5">
           {post?.links?.map((link, index) => (
-            <div key={index} className="flex gap-2 items-center">
+            <div key={index} className="flex gap-1.5 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"

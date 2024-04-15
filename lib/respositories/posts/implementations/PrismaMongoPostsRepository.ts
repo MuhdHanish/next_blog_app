@@ -27,7 +27,7 @@ export class PrismaMongoPostsRepository implements IPostsRepository {
       });
       return post;
     } catch (error) {
-      throw new Error(error instanceof Error ? error.message : `Error finding post using id`);
+      throw new Error(error instanceof Error ? error.message : `Error on finding post using id`);
     }
   }
   
@@ -39,6 +39,18 @@ export class PrismaMongoPostsRepository implements IPostsRepository {
       return post;
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : `Error creating post`);
+    }
+  }
+
+  async findPostByIdAndUpdate(id: string, postData: any) {
+    try {
+      const post = await this.postModel.update({
+        where: { id },
+        data: { ...postData }
+      })
+      return post;
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : `Error on finding post by id and updating`);
     }
   }
 }

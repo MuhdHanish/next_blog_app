@@ -34,7 +34,7 @@ export class FindPostByIdAndUpdateController {
       const authorEmail = `muhammedhanish11@gmail.com`;
       const post = await this.useCase.execute(id, { title, content, thumbnail, publicId, categoryTitle, links, authorEmail });
       if (!post) return this.responseHandler.notFoundHandler("No post found for the provided id");
-      return this.responseHandler.successHandler(null);
+      return this.responseHandler.noContentHandler("Updation successful");
     } catch (error) {
       return this.responseHandler.serverErrorHandler(error);
     }

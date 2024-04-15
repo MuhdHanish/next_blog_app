@@ -53,4 +53,15 @@ export class PrismaMongoPostsRepository implements IPostsRepository {
       throw new Error(error instanceof Error ? error.message : `Error on finding post by id and updating`);
     }
   }
+
+  async findPostByIdAndDelete(id: string) {
+      try {
+      const post = await this.postModel.delete({
+        where: { id }
+      })
+      return post;
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : `Error on deleting post by id`);
+    }
+  };
 }

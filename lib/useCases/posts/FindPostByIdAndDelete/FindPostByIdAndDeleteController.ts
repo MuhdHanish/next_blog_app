@@ -12,7 +12,7 @@ export class FindPostByIdAndDeleteController {
       if (!id) return this.responseHandler.customHandler("Post id is required", null, 400);
       const post = await this.useCase.execute(id);
       if (!post) return this.responseHandler.notFoundHandler("No post found for the provided id");
-      return this.responseHandler.noContentHandler("Deletion successful");
+      return this.responseHandler.customHandler("Deletion successful", null, 200);
     } catch (error) {
       return this.responseHandler.serverErrorHandler(error);
     }

@@ -25,15 +25,6 @@ export class NextResponseHandler implements IResponseHandler {
     );
   }
 
-  noContentHandler(message: string) {
-    return NextResponse.json(
-      { message },
-      {
-        status: 204,
-      }
-    );
-  }
-
   serverErrorHandler(error: any) {
     console.error("Internal server error:", error);
     const errorMessage =

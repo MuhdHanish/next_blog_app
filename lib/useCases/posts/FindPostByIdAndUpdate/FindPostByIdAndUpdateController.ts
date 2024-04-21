@@ -1,5 +1,7 @@
-import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandler";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FindPostByIdAndUpdateUseCase } from "./FindPostByIdAndUpdateUseCase";
+import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandler";
 
 export class FindPostByIdAndUpdateController {
   constructor(
@@ -8,16 +10,12 @@ export class FindPostByIdAndUpdateController {
   ) {}
   async handle(req: Request, res: Response, params: { id: string }) {
     try {
+      const session = await getServerSession(authOptions);
+      if (!session) return this.responseHandler.unAuthenticatedHandler();
       const { id } = params;
       if (!id) return this.responseHandler.customHandler("Post id is required", null, 400);
       const body = await req.json();
-      if (!body) {
-        return this.responseHandler.customHandler(
-          "Request body is empty",
-          null,
-          400
-        );
-      }
+      if (!body) return this.responseHandler.customHandler("Request body is empty", null, 400);
       const { title, content, thumbnail, publicId, categoryTitle, links } = body;
       if (!title || !content) {
         return this.responseHandler.customHandler(

@@ -19,12 +19,16 @@ export class PrismaMongoCategoriesRepository implements ICategoriesRepository {
     try {
       const category = await this.categoryModel.findUnique({
         where: { title },
-        include: { posts: { include: { author: true } } },
+        include: {
+          posts: { include: { author: true }, orderBy: { createdAt: "desc" } },
+        },
       });
       return category;
     } catch (error) {
       throw new Error(
-        error instanceof Error ? error.message : `Error on finding category with posts by title`
+        error instanceof Error
+          ? error.message
+          : `Error on finding category with posts by title`
       );
     }
   }

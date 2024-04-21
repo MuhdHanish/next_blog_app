@@ -3,18 +3,28 @@ import Image from "next/image";
 import { TPost } from "@/types";
 import Category from "./Category";
 import DeleteButton from "./DeleteButton";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 type TPostProps = {
-  post: TPost
-}
+  post: TPost;
+};
 
-export default function Post({ post }: TPostProps) {
-  const isEditable = true;
+export default async function Post({ post }: TPostProps) {
+  const session = await getServerSession(authOptions);
+  const isEditable = session && session?.user?.email === post?.authorEmail;
+  const dateObject = new Date(post?.createdAt);
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  };
+  const createdAt = dateObject.toLocaleDateString("en-US", options);
   return (
     <div className="my-4 border-b border-b-300 py-8">
       <div className="mb-4">
-        Posted by: <span className="font-bold">{post?.author}</span> on
-        {post?.datePublished}
+        Posted by: <span className="font-bold">{post?.author?.name}</span> on{" "}
+        {createdAt}
       </div>
       <div className="w-full h-72 relative">
         <Image
@@ -58,7 +68,7 @@ export default function Post({ post }: TPostProps) {
             </div>
           ))}
           {isEditable && (
-            <div className="flex gap-3 w-fit py-2 px-4 ">
+            <div className="flex gap-2 w-fit py-2 px-4 ">
               <Link
                 href={`/edit-post/${post?.id}`}
                 className="text-emerald-500 editable-btns"

@@ -17,12 +17,17 @@ export type TPopupLink = {
 
 export type TPost = {
   id: string;
-  author: string;
+  author: { name: string };
   authorEmail?: string;
   title: string;
   content: string;
   categoryTitle?: string;
-  datePublished: string;
+  createdAt: string;
   links?: string[];
   thumbnail?: string;
 };
+
+export type TCategory = {
+  id: string;
+  title: string;
+}

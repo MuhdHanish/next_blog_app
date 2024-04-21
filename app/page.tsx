@@ -1,17 +1,22 @@
+export const dynamic = "force-dynamic";
+
 import { TPost } from "@/types";
 import PostsList from "@/components/PostsList";
+import NoDataFound from "@/components/NoDataFound";
 import CategoriesList from "@/components/CategoriesList";
 
-async function getPosts(): Promise<TPost[] | undefined> {
+async function findPosts(): Promise<TPost[] | undefined> {
   try {
     let response = await fetch(`${process.env.NEXTAUTH_URL}/api/posts`, { cache: "no-store" });
     if (response.ok) {
       const responseData = await response.json();
       const { data } = responseData;
       if (!data || !Array.isArray(data)) {
-        throw new Error("Invalid data format");
+        throw new Error(`Invalid data format\nReceived: ${JSON.stringify(data, null, 2)}`);
       }
       return data;
+    } else {
+      throw new Error(`Request failed, HTTP Status Code : ${response.status}`);
     }
   } catch (error) {
     console.error(error);
@@ -19,14 +24,14 @@ async function getPosts(): Promise<TPost[] | undefined> {
 }
 
 export default async function Home() {
-  const posts = (await getPosts()) || [];
-  return ( 
+  const posts = (await findPosts()) || [];
+  return (
     <>
       <CategoriesList />
       {posts && posts?.length > 0 ? (
         <PostsList posts={posts} />
       ) : (
-        <div className="py-6">No posts to display!</div>
+        <NoDataFound>No posts to display!</NoDataFound>
       )}
     </>
   );

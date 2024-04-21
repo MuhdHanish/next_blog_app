@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FindPostByIdAndDeleteUseCase } from "./FindPostByIdAndDeleteUseCase";
 import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandler";
 
@@ -8,6 +10,8 @@ export class FindPostByIdAndDeleteController {
   ) {}
   async handle(req: Request, res: Response, params: { id: string }) {
     try {
+      const session = await getServerSession(authOptions);
+      if (!session) return this.responseHandler.unAuthenticatedHandler();
       const { id } = params;
       if (!id) return this.responseHandler.customHandler("Post id is required", null, 400);
       const post = await this.useCase.execute(id);

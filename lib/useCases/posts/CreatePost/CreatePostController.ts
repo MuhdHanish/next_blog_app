@@ -1,5 +1,7 @@
 
+import { getServerSession } from "next-auth/next";
 import { CreatePostUseCase } from "./CreatePostUseCase";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandler";
 
 export class CreatePostController {
@@ -9,14 +11,10 @@ export class CreatePostController {
   ) { }
   async handle(req: Request, res: Response) {
     try {
+      const session = await getServerSession(authOptions);
+      if (!session) return this.responseHandler.unAuthenticatedHandler();
       const body = await req.json();
-      if (!body) {
-        return this.responseHandler.customHandler(
-          "Request body is empty",
-          null,
-          400
-        );
-      }
+      if (!body) return this.responseHandler.customHandler("Request body is empty", null, 400 );
       const { title, content, thumbnail, publicId, categoryTitle, links } =
         body;
       if (!title || !content) {
@@ -31,7 +29,7 @@ export class CreatePostController {
           400
         );
       }
-      const authorEmail = `muhammedhanish11@gmail.com`;
+      const authorEmail = session?.user?.email as string;
       const post = await this.useCase.execute({
         title,
         content,

@@ -1,16 +1,20 @@
+export const dynamic = "force-dynamic";
+
 import Category from "./Category";
 import { TCategory } from "@/types";
 
-async function getCategories(): Promise<TCategory[] | undefined> {
+async function findCategories(): Promise<TCategory[] | undefined> {
   try {
-    let response = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`);
+    let response = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, { cache: "no-store" });
     if (response.ok) {
       const responseData = await response.json();
       const { data } = responseData;
       if (!data || !Array.isArray(data)) {
-        throw new Error("Invalid data format");
+          throw new Error(`Invalid data format\nReceived: ${JSON.stringify(data, null, 2)}`);
       }
       return data;
+    } else {
+      throw new Error(`Request failed, HTTP Status Code : ${response.status}`);
     }
   } catch (error) {
     console.error(error);
@@ -18,7 +22,7 @@ async function getCategories(): Promise<TCategory[] | undefined> {
 }
 
 export default async function CategoriesList() {
-  const categories = (await getCategories()) || [];
+  const categories = (await findCategories()) || [];
   return (
     <div className="flex gap-2 flex-wrap">
       {categories &&

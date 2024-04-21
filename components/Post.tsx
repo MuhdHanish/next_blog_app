@@ -22,10 +22,12 @@ export default async function Post({ post }: TPostProps) {
   const createdAt = dateObject.toLocaleDateString("en-US", options);
   return (
     <div className="my-4 border-b border-b-300 py-8">
-      <div className="mb-4">
-        Posted by: <span className="font-bold">{post?.author?.name}</span> on{" "}
+      {<div className="mb-4">
+        Posted{" "}
+        {!isEditable && <>{"by : "} <span className="font-bold">{post?.author?.name}</span> </>}
+        on{" "}
         {createdAt}
-      </div>
+      </div>}
       <div className="w-full h-72 relative">
         <Image
           className="object-cover rounded-md object-center"
@@ -75,7 +77,7 @@ export default async function Post({ post }: TPostProps) {
               >
                 Edit
               </Link>
-              <DeleteButton />
+              <DeleteButton id={post?.id}/>
             </div>
           )}
         </div>

@@ -1,20 +1,18 @@
 "use client";
 import Link from "next/link";
-import { TCategory } from "@/types";
+import { TCategory, TPost } from "@/types";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, MouseEventHandler, useEffect, useMemo, useState } from "react";
 
-export default function CreatePostForm() {
+export default function PostForm({ post }: { post?: TPost | undefined }) {
   const router = useRouter();
-
   const [error, setError] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [publicId, setPublicId] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
-  const [categoryTitle, setCategoryTitle] = useState("");
+  const [title, setTitle] = useState(post?.title || "");
+  const [content, setContent] = useState(post?.content || "");
+  const [publicId, setPublicId] = useState(post?.publicId || "");
+  const [thumbnail, setThumbnail] = useState(post?.thumbnail || "");
+  const [categoryTitle, setCategoryTitle] = useState(post?.categoryTitle || "");
   const [categories, setCategories] = useState<TCategory[]>([]);
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -33,8 +31,7 @@ export default function CreatePostForm() {
     };
     fetchCategories();
   }, []);
-
-  const [links, setLinks] = useState<string[]>([]);
+  const [links, setLinks] = useState<string[]>(post?.links || []);
   const [linkInput, setLinkInput] = useState("");
   const handleLinks: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
@@ -48,27 +45,32 @@ export default function CreatePostForm() {
   const deleteLink = (index: number) => {
     setLinks((prev) => prev?.filter((_, idx) => idx !== index));
   };
-
+  const url = useMemo(() => (post ? `/api/posts/${post?.id}` : `/api/posts`), [post]);
+  const method = useMemo(() => (post ? "PUT" : "POST"), [post]);
+  const requestConfig = useMemo(() => ({
+    headers: {
+      "Content-Type": `application/json`,
+    },
+  }), []);
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!title || !content) return setError("Title & Content Are Required");
+    const body = JSON.stringify({
+      title,
+      content,
+      links,
+      categoryTitle,
+      thumbnail,
+      publicId,
+    });
     try {
-      const response = await fetch(`/api/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          content,
-          links,
-          categoryTitle,
-          thumbnail,
-          publicId
-        }),
+      const response = await fetch(url, {
+        method,
+        ...requestConfig,
+        body,
       });
       if (response.ok) {
-        router.push(`/dashboard`)
+        router.push(`/dashboard`);
       }
     } catch (error) {
       console.error(error);
@@ -76,7 +78,7 @@ export default function CreatePostForm() {
   };
   return (
     <div>
-      <h2>Create Post</h2>
+      <h2>{post ? "Edit" : "Create"} Post</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
           value={title}
@@ -174,6 +176,7 @@ export default function CreatePostForm() {
           onChange={(event) => {
             setCategoryTitle(event.target.value);
           }}
+          value={categoryTitle}
           className="appearance-none"
         >
           <option value="">Select A Category</option>
@@ -186,7 +189,7 @@ export default function CreatePostForm() {
             ))}
         </select>
         <button className="primary-btn" type="submit">
-          Create Post
+          {post ? "Update" : "Create"} Post
         </button>
         {error && (
           <div className="text-red-600 font-bold text-sm p-1">{error}</div>

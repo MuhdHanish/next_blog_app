@@ -1,9 +1,39 @@
 "use client";
 import Link from "next/link";
-import { categoriesList } from "@/data";
-import { ChangeEvent, MouseEventHandler, useState } from "react";
+import { TCategory } from "@/types";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 
 export default function CreatePostForm() {
+  const router = useRouter();
+
+  const [error, setError] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [publicId, setPublicId] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [categoryTitle, setCategoryTitle] = useState("");
+  const [categories, setCategories] = useState<TCategory[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        let response = await fetch(`/api/categories`);
+        if (response.ok) {
+          const responseData = await response.json();
+          const { data } = responseData;
+          if (!data || !Array.isArray(data)) {
+            throw new Error("Invalid data format");
+          }
+          return setCategories(data || []);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   const [links, setLinks] = useState<string[]>([]);
   const [linkInput, setLinkInput] = useState("");
   const handleLinks: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -16,14 +46,53 @@ export default function CreatePostForm() {
     return;
   };
   const deleteLink = (index: number) => {
-    setLinks((prev) => prev?.filter((_, idx)=> idx !== index));
-  }
+    setLinks((prev) => prev?.filter((_, idx) => idx !== index));
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!title || !content) return setError("Title & Content Are Required");
+    try {
+      const response = await fetch(`/api/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          links,
+          categoryTitle,
+          thumbnail,
+          publicId
+        }),
+      });
+      if (response.ok) {
+        router.push(`/dashboard`)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       <h2>Create Post</h2>
-      <form className="flex flex-col gap-2">
-        <input type="text" placeholder="Title" />
-        <textarea placeholder="Content"></textarea>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <input
+          value={title}
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+          type="text"
+          placeholder="Title"
+        />
+        <textarea
+          value={content}
+          onChange={(event) => {
+            setContent(event.target.value);
+          }}
+          placeholder="Content"
+        ></textarea>
         {links && (
           <div className="flex flex-wrap gap-x-2 gap-y-1">
             {links?.map((link, index) => (
@@ -101,20 +170,27 @@ export default function CreatePostForm() {
             Add
           </button>
         </div>
-        <select className="appearance-none">
+        <select
+          onChange={(event) => {
+            setCategoryTitle(event.target.value);
+          }}
+          className="appearance-none"
+        >
           <option value="">Select A Category</option>
-          {categoriesList &&
-            categoriesList.length > 0 &&
-            categoriesList?.map((category) => (
-              <option key={category?.id} value={category?.name}>
-                {category?.name}
+          {categories &&
+            categories.length > 0 &&
+            categories?.map((category) => (
+              <option key={category?.id} value={category?.title}>
+                {category?.title}
               </option>
             ))}
         </select>
         <button className="primary-btn" type="submit">
           Create Post
         </button>
-        <div className="text-red-600 font-bold text-sm p-1">Error Message</div>
+        {error && (
+          <div className="text-red-600 font-bold text-sm p-1">{error}</div>
+        )}
       </form>
     </div>
   );

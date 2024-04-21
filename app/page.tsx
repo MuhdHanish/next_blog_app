@@ -1,9 +1,26 @@
-import { posts } from "@/data"; 
+import { TPost } from "@/types";
 import PostsList from "@/components/PostsList";
 import CategoriesList from "@/components/CategoriesList";
 
-export default function Home() {
-  return (
+async function getPosts(): Promise<TPost[] | undefined> {
+  try {
+    let response = await fetch(`${process.env.NEXTAUTH_URL}/api/posts`, { cache: "no-store" });
+    if (response.ok) {
+      const responseData = await response.json();
+      const { data } = responseData;
+      if (!data || !Array.isArray(data)) {
+        throw new Error("Invalid data format");
+      }
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export default async function Home() {
+  const posts = (await getPosts()) || [];
+  return ( 
     <>
       <CategoriesList />
       {posts && posts?.length > 0 ? (

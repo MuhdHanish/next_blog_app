@@ -25,6 +25,24 @@ export class NextResponseHandler implements IResponseHandler {
     );
   }
 
+  unAuthenticatedHandler() {
+    return NextResponse.json(
+      { message: `Un Authenticated` },
+      {
+        status: 401,
+      }
+    );
+  }
+
+  accessForbiddenHandler() {
+    return NextResponse.json(
+      { message: `Access Forbidden` },
+      {
+        status: 403,
+      }
+    );
+  }
+
   serverErrorHandler(error: any) {
     console.error("Internal server error:", error);
     const errorMessage =

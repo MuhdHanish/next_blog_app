@@ -24,6 +24,7 @@ export type TPost = {
   categoryTitle?: string;
   createdAt: string;
   links?: string[];
+  publicId?: string;
   thumbnail?: string;
 };
 

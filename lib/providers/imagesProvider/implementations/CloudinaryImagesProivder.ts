@@ -18,14 +18,17 @@ export class CloudinaryImagesProvider implements IImagesProvider {
     this.cloudinaryInstance.config(config);
   }
 
-  async deleteImageById(folder_name: string,id: string) {
+  async deleteImageById(folder_name: string, id: string) {
     try {
-      await this.cloudinaryInstance.uploader.destroy(`${folder_name}/${id}`);
+      const result = await this.cloudinaryInstance.uploader.destroy(`${folder_name}/${id}`);
+      if (result.result === "not found") {
+        throw new Error(`Image with id ${id} in folder ${folder_name} not found`);
+      }
     } catch (error) {
       throw new Error(
         error instanceof Error
           ? error.message
-          : `Error on removing image using public id in cloudinary instance`
+          : `Unexpected error while removing image with id ${id} in folder ${folder_name} : ${error}`
       );
     }
   }

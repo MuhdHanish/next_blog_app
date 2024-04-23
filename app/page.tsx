@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 import { TPost } from "@/types";
 import PostsList from "@/components/PostsList";

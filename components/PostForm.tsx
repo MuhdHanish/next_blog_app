@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
+import moment from "moment-timezone";
 import { TCategory, TPost } from "@/types";
 import { useRouter } from "next/navigation";
 import { CldUploadButton, CloudinaryUploadWidgetInfo, CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { ChangeEvent, MouseEventHandler, useEffect, useMemo, useState, useTransition } from "react";
-import Image from "next/image";
 
 export default function PostForm({ post }: { post?: TPost | undefined }) {
   const router = useRouter();
@@ -105,6 +106,18 @@ export default function PostForm({ post }: { post?: TPost | undefined }) {
           body,
         });
         if (response.ok) {
+          const timeZone = moment.tz.guess();
+          const date = new Date(); 
+          const options:Intl.DateTimeFormatOptions = {
+            timeZone,
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          };
+          const formattedDate = date.toLocaleDateString("en-US", options);
           router.push(`/dashboard`);
         } else {
           throw new Error(`Failed to create post`);

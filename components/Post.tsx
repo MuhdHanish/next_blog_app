@@ -77,7 +77,7 @@ export default async function Post({ post }: TPostProps) {
               >
                 Edit
               </Link>
-              <DeleteButton id={post?.id}/>
+              <DeleteButton post={post}/>
             </div>
           )}
         </div>

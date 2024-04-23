@@ -1,11 +1,13 @@
-export const categoriesList = [
+import { TCategory, TPost } from "@/types";
+
+export const categoriesList: TCategory[] = [
   { id: '1', title: "Technology" },
   { id: '2', title: "AI" },
   { id: '3', title: "Programming" },
   { id: '4', title: "Tips & Tricks" },
 ];
 
-export const posts = [
+export const posts: TPost[] = [
   {
     id: "1",
     title: "Introduction to JavaScript",

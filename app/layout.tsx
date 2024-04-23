@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
+import { SonnerToastProiver } from "@/providers/SonnerToastProvier";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             <div className="flex-auto">{children}</div>
             <Footer />
           </div>
+          <SonnerToastProiver/>
         </NextAuthProvider>
       </body>
     </html>

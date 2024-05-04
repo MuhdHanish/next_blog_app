@@ -3,5 +3,5 @@
 import { Toaster } from "sonner";
 
 export const SonnerToastProiver = () => {
-  return <Toaster/>
+  return <Toaster position="top-right" richColors closeButton />;
 }

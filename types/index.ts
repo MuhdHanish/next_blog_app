@@ -31,4 +31,23 @@ export type TPost = {
 export type TCategory = {
   id: string;
   title: string;
-}
+};
+
+export type TRequestProps = {
+  data?: any;
+  url: string;
+  keyName?: string;
+  isClient?: boolean;
+  returnType?: "array" | "object";
+  setError?: (error: any) => void;
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+};
+
+export type TImageHandlerProps = {
+  setThumbnail: (value: string) => void;
+  thumbnail: string;
+  setPublicId: (value: string) => void;
+  publicId: string;
+  setError?: (value: string) => void;
+  alt: string;
+};

@@ -7,7 +7,7 @@
 }
 
 .editable-btns {
-  @apply px-2 py-1 text-sm font-bold outline-none rounded-md bg-slate-200 hover:bg-slate-300 transition;
+  @apply px-2.5 py-1.5 text-sm font-bold outline-none rounded-sm bg-slate-200 hover:bg-slate-300 transition;
 }
 
 .primary-btn {

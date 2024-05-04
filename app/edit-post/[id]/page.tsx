@@ -6,7 +6,7 @@ import PostForm from "@/components/PostForm";
 import { TRequestProps, TPost } from "@/types";
 import { getServerSession } from "next-auth/next";
 import NoDataFound from "@/components/NoDataFound";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/options";
 
 type TRequestParams = {
   id: string;

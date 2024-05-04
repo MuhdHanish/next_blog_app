@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/options";
 import { FindPostByIdAndDeleteUseCase } from "./FindPostByIdAndDeleteUseCase";
 import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandler";
 

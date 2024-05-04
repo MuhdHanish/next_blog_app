@@ -5,7 +5,7 @@ import PostsList from "@/components/PostsList";
 import { TRequestProps, TPost } from "@/types";
 import { getServerSession } from "next-auth/next";
 import NoDataFound from "@/components/NoDataFound";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/options";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);

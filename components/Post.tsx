@@ -4,7 +4,7 @@ import { TPost } from "@/types";
 import Category from "./Category";
 import DeleteButton from "./DeleteButton";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/options";
 
 type TPostProps = {
   post: TPost;

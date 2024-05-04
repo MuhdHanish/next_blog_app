@@ -1,7 +1,6 @@
-
 import { getServerSession } from "next-auth/next";
 import { CreatePostUseCase } from "./CreatePostUseCase";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/options";
 import { IResponseHandler } from "@/lib/providers/responseHandler/IResponseHandler";
 
 export class CreatePostController {

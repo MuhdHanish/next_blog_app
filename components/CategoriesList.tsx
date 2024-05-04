@@ -1,28 +1,14 @@
-export const revalidate = 0;
-
 import Category from "./Category";
-import { TCategory } from "@/types";
-
-async function findCategories(): Promise<TCategory[] | undefined> {
-  try {
-    let response = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, { cache: "no-store" });
-    if (response.ok) {
-      const responseData = await response.json();
-      const { data } = responseData;
-      if (!data || !Array.isArray(data)) {
-          throw new Error(`Invalid data format\nReceived: ${JSON.stringify(data, null, 2)}`);
-      }
-      return data;
-    } else {
-      throw new Error(`Request failed, HTTP Status Code : ${response.status}`);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
+import { request } from "@/utils";
+import { TCategory, TRequestProps } from "@/types";
 
 export default async function CategoriesList() {
-  const categories = (await findCategories()) || [];
+  const options: TRequestProps = {
+    url: `/categories`,
+    returnType: "array",
+    method: "GET"
+  };
+  const categories = (await request(options)) as TCategory[] | undefined;
   return (
     <div className="flex gap-2 flex-wrap">
       {categories &&

@@ -75,7 +75,7 @@ export default async function Post({ post }: TPostProps) {
                 href={`/edit-post/${post?.id}`}
                 className="text-emerald-500 editable-btns"
               >
-                Edit
+                EDIT
               </Link>
               <DeleteButton post={post}/>
             </div>

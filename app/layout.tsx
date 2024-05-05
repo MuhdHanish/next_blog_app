@@ -11,6 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Next Blog",
   description: "A powerful blogging platform built with Next.js, enabling you to create, publish, and share your thoughts with the world effortlessly.",
+  keywords: ["Next Blog", "Blogging Platform", "Next.js", "Create", "Publish", "Share", "Thoughts", "Effortlessly", "Powerful"],
 };
 
 export default function RootLayout({

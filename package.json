@@ -1,7 +1,32 @@
 {
   "name": "next_blog_app",
+  "author": "MuhdHanish",
+  "description": "A powerful lightweight blogging platform built with Next.js and Tailwind CSS. Create, publish, and manage blog posts with ease.",
   "version": "0.1.0",
   "private": true,
+  "keywords": [
+    "Next Blog",
+    "Blogging Platform",
+    "Authentication",
+    "Next.js",
+    "Next Auth",
+    "Typescript",
+    "Prisma",
+    "Create",
+    "Publish",
+    "Update",
+    "Delete",
+    "Sonner",
+    "Mongodb",
+    "Api",
+    "Error Handling",
+    "Clean Architecture",
+    "Next Api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MuhdHanish/next_blog_app.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

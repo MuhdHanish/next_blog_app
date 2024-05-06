@@ -47,7 +47,9 @@ Next Blog is a powerful blogging platform built with Next.js with typescript, ut
 
 4. Rename `.env.example` to `.env` and fill in the necessary environment variables.
 
-5. Run the development server using `npm run dev`.
+5. Run the development server by running: 
+  ```bash
+   npm run dev
 
 6. Access the application at `http://localhost:3000`.
 

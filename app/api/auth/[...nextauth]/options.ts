@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { Adapter } from "next-auth/adapters";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
-import nextAuth, { AuthOptions } from "next-auth";
+import { AuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 const authOptions: AuthOptions = {
@@ -22,7 +22,5 @@ const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET as string,
 };
-
-const handler = nextAuth(authOptions);
 
 export default authOptions;

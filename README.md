@@ -41,15 +41,11 @@ Next Blog is a powerful blogging platform built with Next.js with typescript, ut
    ```bash
    cd next_blog_app
 
-3. Install dependencies by running: 
-   ```bash
-   cd npm install
+3. Install dependencies by running: `npm install` or `yarn install`
 
 4. Rename `.env.example` to `.env` and fill in the necessary environment variables.
 
-5. Run the development server by running: 
-  ```bash
-   npm run dev
+5. Start the Server `npm run dev` or `yarn dev`
 
 6. Access the application at `http://localhost:3000`.
 

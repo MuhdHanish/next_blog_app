@@ -1,3 +1,3 @@
 export default function Footer() {
-  return <footer className="py-3 text-sm">This website is designed by MuhHanish © 2024</footer>;
+  return <footer className="py-3 text-sm">Next Blog | Explore more on my blog!</footer>;
 }

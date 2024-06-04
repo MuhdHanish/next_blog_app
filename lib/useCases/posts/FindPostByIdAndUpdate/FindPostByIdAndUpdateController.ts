@@ -29,7 +29,7 @@ export class FindPostByIdAndUpdateController {
           400
         );
       }
-      const authorEmail = `muhammedhanish11@gmail.com`;
+      const authorEmail = session?.user?.email as string;
       const post = await this.useCase.execute(id, { title, content, thumbnail, publicId, categoryTitle, links, authorEmail });
       if (!post) return this.responseHandler.notFoundHandler("No post found for the provided id");
       return this.responseHandler.customHandler("Updation successful", null, 200);

@@ -46,7 +46,7 @@ export default async function Post({ post }: TPostProps) {
       {post?.links && (
         <div className="my-4 flex flex-col gap-1.5">
           {post?.links?.map((link, index) => (
-            <div key={index} className="flex gap-1.5 items-center">
+            <div key={index} className="flex gap-1.5 flex-shrink-0 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"

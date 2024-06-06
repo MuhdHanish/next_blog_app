@@ -51,7 +51,7 @@ export default async function Post({ post }: TPostProps) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
-                className="w-6 md:w-4 h-6 md:h-4"
+                className="w-4 h-4"
               >
                 <path
                   fillRule="evenodd"
